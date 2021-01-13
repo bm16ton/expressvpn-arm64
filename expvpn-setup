@@ -1,0 +1,74 @@
+#!/bin/sh
+
+GTKDIALOG=gtkdialog
+
+funcbtnCreate() {
+	echo '<button>
+			<input file stock="gtk-'$2'"></input>
+			<action>fileselect:ent'$1'</action>
+		</button>'
+}
+
+MAIN_DIALOG='
+<window title="Fileselect Advanced" resizable="false" width-request="500">
+	<vbox>
+		<vbox border-width="20" spacing="10">
+			<hbox>
+				<text label=".ovpn file" width-request="80"></text>
+				<entry>
+					<variable>ent0</variable>
+				</entry>
+				'"`funcbtnCreate 0 new`"'
+			</hbox>
+			<hseparator></hseparator>
+			<hbox>
+				<text label="ta.key file" width-request="80"></text>
+				<entry>
+					<variable>ent1</variable>
+				</entry>
+				'"`funcbtnCreate 1 new`"'
+			</hbox>
+		<hbox>
+			<text>
+				<label>Username;</label>
+			</text>
+		<entry>
+			<variable>USERNAME</variable>
+		</entry>
+		</hbox>
+		<hbox>
+			<text>
+				<label>Password;</label>
+			</text>
+		<entry>
+			<variable>PASSWORD</variable>
+		</entry>
+		</hbox>
+		<button>
+		<label>apply</label>
+		<action>sudo apt-get install openvpn openvpn-systemd-resolved</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection import type openvpn file $ent0"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.data ta=$ent1"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.data compress=lz0"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) -vpn.data comp-lzo"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.data username=$USERNAME"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.data password-flags=0"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.data cert-pass-flags=0"</action>
+		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.secrets password=$PASSWORD"</action>
+        <action>sudo nmcli connection modify $(basename $ent0 .ovpn) con-name expressvpn</action>
+        <action>sudo systemctl restart NetworkManager.service</action>
+        </button>
+		</vbox>
+		<hseparator></hseparator>
+		<hbox homogeneous="true">
+			<button ok></button>
+		</hbox>
+	</vbox>
+</window>
+'
+export MAIN_DIALOG
+
+case $1 in
+	-d | --dump) echo "$MAIN_DIALOG" ;;
+	*) $GTKDIALOG --program=MAIN_DIALOG ;;
+esac

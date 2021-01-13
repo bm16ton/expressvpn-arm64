@@ -26,7 +26,7 @@ main() {
         curl -s https://www.expressvpn.com/what-is-my-ip | grep -m 1 -A4 "Location" | grep -v "h4\|class" | grep -v Location 2> /dev/null
         ;;
     status)
-        nmcli connection show my_expressvpn_kenya_udp | grep -i VPN.VPN-STATE > /dev/null && echo Connected || echo "Not Connected"
+        nmcli connection show expressvpn | grep -i VPN.VPN-STATE > /dev/null && echo Connected || echo "Not Connected"
         ;;
     help)
         echo "USAGE: expvpn option"
@@ -40,10 +40,10 @@ main() {
         echo "stop      stop vpn connection"
         ;;
     start)
-        nmcli connection up my_expressvpn_kenya_udp
+        nmcli connection up expressvpn
         ;;
     stop)
-        nmcli connection down my_expressvpn_kenya_udp
+        nmcli connection down expressvpn
         ;;
     esac
     exit 0

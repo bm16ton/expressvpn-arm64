@@ -83,6 +83,10 @@ MAIN_DIALOG='
 
 		<hbox  homogeneous="false" space-expand="false" space-fill="false">
 		<button xalign="0">
+	    <label>SETUP</label>
+	    <action>pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY expvpn-setup</action>
+	    </button>
+		<button xalign="0">
 	    <label>Change MAC</label>
 	    <action>pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xterm -hold -e macchanger -A</action>
 	    </button>

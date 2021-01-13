@@ -1,0 +1,3 @@
+#!/bin/sh
+nmcli connection show my_expressvpn_kenya_udp | grep -i remo | awk '{print $52}'
+

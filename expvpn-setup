@@ -57,6 +57,7 @@ MAIN_DIALOG='
 		<action>sudo runuser -l $USER -c "sudo -S nmcli connection modify $(basename $ent0 .ovpn) +vpn.secrets password=$PASSWORD"</action>
         <action>sudo nmcli connection modify $(basename $ent0 .ovpn) con-name expressvpn</action>
         <action>sudo systemctl restart NetworkManager.service</action>
+        <action>zenity --info --width=200 --height=100 --text "Setup complete,\n run expvpn or expvpn-gtk"</action>
         </button>
 		</vbox>
 		<hseparator></hseparator>

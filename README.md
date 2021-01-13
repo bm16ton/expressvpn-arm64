@@ -4,10 +4,16 @@ requires gtkdialog https://github.com/bm16ton/gtkdialog, network-manager, and cu
 Tho i will hopefully add installing the config files sometime soon
 just copy expvpn and expvpn-gtk to PATH
 IE
+
 sudo cp expvpn* /usr/local/bin/
+
 sudo chmod +x /usr/local/bin/expvpn*
+
    then
+   
 expvpn
+
    or
+   
 expvpn-gtk
 

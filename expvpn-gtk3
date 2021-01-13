@@ -48,7 +48,7 @@ MAIN_DIALOG='
 	<hbox homogeneous="false" space-expand="false" space-fill="false">
 				<button>
 			    <label>SWITCH SERVER</label>
-			    <action>nmcli connection modify my_expressvpn_kenya_udp +vpn.data remote="$COMBO"</action>
+			    <action>nmcli connection modify expressvpn +vpn.data remote="$COMBO"</action>
 				<action>refresh:status</action>
 				<action>refresh:extip</action>
 				<action>refresh:defint</action>

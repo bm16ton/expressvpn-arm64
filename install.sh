@@ -1,4 +1,5 @@
 #!/bin/bash
+sudo apt-get install openvpn openvpn-systemd-resolved
 sudo cp cur-server /usr/local/bin/
 sudo cp expvpn /usr/local/bin/
 sudo cp expvpn-gtk /usr/local/bin/

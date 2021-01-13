@@ -34,7 +34,7 @@ MAIN_DIALOG='
         <text xalign="0"><input>echo "Current Server"</input></text>
 		<text xalign="0">
 		<variable>SERV</variable>
-		<input>./cur-server</input></text>
+		<input>cur-server</input></text>
 		</hbox>
 		<hbox homogeneous="true" space-expand="false" space-fill="false">
 		<text xalign="0"><input>echo "SELECT SERVER"</input></text>

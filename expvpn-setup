@@ -10,7 +10,7 @@ funcbtnCreate() {
 }
 
 MAIN_DIALOG='
-<window title="Fileselect Advanced" resizable="false" width-request="500">
+<window title="Express VPN Setup" resizable="false" width-request="500">
 	<vbox>
 		<vbox border-width="20" spacing="10">
 			<hbox>

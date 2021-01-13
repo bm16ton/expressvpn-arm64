@@ -1,0 +1,57 @@
+#!/bin/bash
+if [ $# -ne 1 ]
+then
+    echo "USAGE: expvpn option"
+    echo "options;"
+    echo "secure    shows if IP is secure or not"
+    echo "ip        the current IP"
+    echo "location  shows the location of you ip"
+    echo "status    shows if connected"
+    echo "start     start vpn connection"
+    echo "stop      stop vpn connection"
+    echo "help      this help"
+exit
+return
+fi
+main() {
+   case "$1" in
+    secure)
+        POOP=$(curl -s https://www.expressvpn.com/what-is-my-ip | grep -m 1 "Your IP address")
+        [[ "$POOP" == "Your IP address is secured." ]] && echo "Your IP address is secured." || echo "Your IP address is Not Secured"
+        ;;
+    ip)
+        curl -s https://www.expressvpn.com/what-is-my-ip | grep -m 1 -A3 "Your" | grep -v "h4\|class" | grep -v Your 2> /dev/null
+        ;;
+    location)
+        curl -s https://www.expressvpn.com/what-is-my-ip | grep -m 1 -A4 "Location" | grep -v "h4\|class" | grep -v Location 2> /dev/null
+        ;;
+    status)
+        nmcli connection show my_expressvpn_kenya_udp | grep -i VPN.VPN-STATE > /dev/null && echo Connected || echo "Not Connected"
+        ;;
+    help)
+        echo "USAGE: expvpn option"
+        echo "options;"
+        echo "secure    shows if IP is secure or not"
+        echo "ip        the current IP"
+        echo "location  shows the location of you ip"
+        echo "status    shows if connected"
+        echo "help      this help"
+        echo "start     start vpn connection"
+        echo "stop      stop vpn connection"
+        ;;
+    start)
+        nmcli connection up my_expressvpn_kenya_udp
+        ;;
+    stop)
+        nmcli connection down my_expressvpn_kenya_udp
+        ;;
+    esac
+    exit 0
+}
+
+get_ip() {
+    RADDR=$(curl -s https://ipinfo.io/ip)
+    echo "remote ip: $RADDR"
+}
+
+main "${@}"

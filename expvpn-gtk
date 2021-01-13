@@ -1,0 +1,76 @@
+#!/bin/sh
+
+GTKDIALOG=gtkdialog
+
+MAIN_DIALOG='
+<window title="Tor GUI" icon-name="tor-gui" resizable="false">
+	<vbox width-request="380" width="350">
+		<vbox homogeneous="false" space-expand="true" space-fill="true" border-width="10">
+<hbox homogeneous="true" space-expand="false" space-fill="false">
+		<text xalign="0"><input>echo "STATUS;"</input></text>
+		<text xalign="0">
+        <variable>status</variable>
+		<input>expvpn status</input></text>
+        </hbox>
+        <hbox homogeneous="true" space-expand="false" space-fill="false">
+        <text xalign="0"><input>echo "Ip secure;"</input></text>
+        		<text xalign="0">
+		<variable>secure</variable>
+		<input>expvpn secure</input></text>
+		</hbox>
+        <hbox homogeneous="true" space-expand="false" space-fill="false">
+        <text xalign="0"><input>echo Public IP;</input></text>
+        		<text xalign="0">
+		<variable>extip</variable>
+		<input>expvpn ip</input></text>
+		</hbox>
+		<hbox homogeneous="true" space-expand="false" space-fill="false">
+        <text xalign="0"><input>echo "location"</input></text>
+		<text xalign="0">
+		<variable>defint</variable>
+		<input>expvpn location</input></text>
+		</hbox>
+		        </vbox>
+	<hbox homogeneous="false" space-expand="false" space-fill="false">
+			<button>
+			    <label>START VPN</label>
+			    <action>"expvpn start"</action>
+				<action>refresh:status</action>
+				<action>refresh:extip</action>
+				<action>refresh:defint</action>
+				<action>refresh:secure</action>
+			</button>
+			<button>
+			    <label>STOP VPN</label>
+			    <action>"expvpn stop"</action>
+				<action>refresh:status</action>
+				<action>refresh:extip</action>
+				<action>refresh:defint</action>
+				<action>refresh:secure</action>
+			</button>
+		</hbox>
+
+		<hbox  homogeneous="false" space-expand="false" space-fill="false">
+		<button xalign="0">
+	    <label>Change MAC</label>
+	    <action>pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xterm -hold -e macchanger -A</action>
+	    </button>
+	    <button xalign="0">
+	    <label>Revert MAC</label>
+	    <action>pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xterm -hold -e macchanger -p</action>
+	    </button>
+	    </hbox>
+				<hbox>
+			<button cancel></button>
+			<button ok></button>
+		</hbox>
+	</vbox>
+</window>
+'
+export MAIN_DIALOG
+
+case $1 in
+	-d | --dump) echo "$MAIN_DIALOG" ;;
+	*) $GTKDIALOG --program=MAIN_DIALOG ;;
+esac
+

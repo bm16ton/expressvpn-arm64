@@ -1,0 +1,107 @@
+#!/bin/sh
+
+GTKDIALOG=gtkdialog-gtk3
+
+MAIN_DIALOG='
+<window title="Tor GUI" icon-name="tor-gui" resizable="false">
+	<vbox width-request="550" width="520" border-width="10">
+		<vbox homogeneous="true" space-expand="false" space-fill="true">
+        <hbox homogeneous="true" space-expand="false" space-fill="true">
+		<text xalign="0"><input>echo "STATUS;"</input></text>
+		<text xalign="0">
+        <variable>status</variable>
+		<input>expvpn status</input></text>
+        </hbox>
+        <hbox homogeneous="true" space-expand="false" space-fill="true">
+        <text xalign="0"><input>echo "Ip secure;"</input></text>
+        		<text xalign="0">
+		<variable>secure</variable>
+		<input>expvpn secure</input></text>
+		</hbox>
+        <hbox homogeneous="true" space-expand="false" space-fill="true">
+        <text xalign="0"><input>echo Public IP;</input></text>
+        		<text xalign="0">
+		<variable>extip</variable>
+		<input>expvpn ip</input></text>
+		</hbox>
+		<hbox homogeneous="true" space-expand="false" space-fill="true">
+        <text xalign="0"><input>echo "location"</input></text>
+		<text xalign="0">
+		<variable>defint</variable>
+		<input>expvpn location</input></text>
+		</hbox>
+		<hbox homogeneous="true" space-expand="true" space-fill="true">
+        <text xalign="0"><input>echo "Current Server"</input></text>
+		<text xalign="0">
+		<variable>SERV</variable>
+		<input>./cur-server</input></text>
+		</hbox>
+		<hbox homogeneous="true" space-expand="true" space-fill="true">
+		<text xalign="0"><input>echo "SELECT SERVER"</input></text>
+		<comboboxentry xalign="0">
+		<default>kenya-ca-version-2.expressnetw.com:1195</default>
+		<input file>'/usr/share/expvpn/server-list-udp-url-port'</input>
+		<variable>COMBO</variable>
+		</comboboxentry>
+		</hbox>
+		        </vbox>
+	<hbox homogeneous="false" space-expand="false" space-fill="false">
+				<button>
+			    <label>SWITCH SERVER</label>
+			    <action>nmcli connection modify my_expressvpn_kenya_udp +vpn.data remote="$COMBO"</action>
+				<action>refresh:status</action>
+				<action>refresh:extip</action>
+				<action>refresh:defint</action>
+				<action>refresh:secure</action>
+				<action>refresh:SERV</action>
+			</button>
+			<button>
+			    <label>START VPN</label>
+			    <action>"expvpn start"</action>
+				<action>refresh:status</action>
+				<action>refresh:extip</action>
+				<action>refresh:defint</action>
+				<action>refresh:secure</action>
+			</button>
+			<button>
+			    <label>STOP VPN</label>
+			    <action>"expvpn stop"</action>
+				<action>refresh:status</action>
+				<action>refresh:extip</action>
+				<action>refresh:defint</action>
+				<action>refresh:secure</action>
+			</button>
+			<button>
+			    <label>REFRESH INFO</label>
+				<action>refresh:status</action>
+				<action>refresh:extip</action>
+				<action>refresh:defint</action>
+				<action>refresh:secure</action>
+				<action>refresh:SERV</action>
+			</button>
+		</hbox>
+
+		<hbox  homogeneous="false" space-expand="false" space-fill="false">
+		<button xalign="0">
+	    <label>Change MAC</label>
+	    <action>pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xterm -hold -e macchanger -A</action>
+	    </button>
+	    <button xalign="0">
+	    <label>Revert MAC</label>
+	    <action>pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY xterm -hold -e macchanger -p</action>
+	    </button>
+	    </hbox>
+				<hbox>
+			<button cancel></button>
+			<button ok></button>
+		</hbox>
+	</vbox>
+</window>
+'
+export MAIN_DIALOG
+
+case $1 in
+	-d | --dump) echo "$MAIN_DIALOG" ;;
+	*) $GTKDIALOG --program=MAIN_DIALOG ;;
+esac
+

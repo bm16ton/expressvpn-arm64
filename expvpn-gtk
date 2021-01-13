@@ -3,7 +3,7 @@
 GTKDIALOG=gtkdialog
 
 MAIN_DIALOG='
-<window title="Tor GUI" icon-name="tor-gui" resizable="true">
+<window title="ExpressVPN GUI" icon-name="tor-gui" resizable="true">
 	<vbox width-request="600" width="580">
 		<vbox width-request="70" width="50" homogeneous="false" space-expand="true" space-fill="true">
         <hbox homogeneous="true" space-expand="false" space-fill="false">
